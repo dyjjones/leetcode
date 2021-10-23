@@ -7,8 +7,8 @@ def main():
     print("Run `pytest` for checking solutions.")
 
     regex_pattern = f'p\d+$'
-    filtered_problems = [p for p in globals() if re.match(regex_pattern, p)]
-    filtered_problems.sort(key=lambda s: int(s[1:]))
+    filtered_problems = [int(p[1:]) for p in globals() if re.match(regex_pattern, p)]
+    filtered_problems.sort()
 
     if filtered_problems:
         print("Problems solved in Python:")
