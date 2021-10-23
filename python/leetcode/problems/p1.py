@@ -14,7 +14,3 @@ class Solution:
                         return indices[:2]
                 else:
                     return [indices[0], num_indices[n][0]]
-
-def solution(*args):
-    s = Solution()
-    return s.twoSum(*args)
