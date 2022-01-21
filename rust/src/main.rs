@@ -7,6 +7,7 @@ mod prob4;
 mod prob5;
 mod prob6;
 mod prob7;
+mod prob8;
 mod prob9;
 
 fn main() {
