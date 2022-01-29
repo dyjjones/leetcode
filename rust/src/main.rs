@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
 mod prob1;
+mod prob10;
 mod prob11;
 mod prob12;
 mod prob13;
