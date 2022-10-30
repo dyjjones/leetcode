@@ -27,50 +27,53 @@
 //     }
 // }
 
-pub fn max_area(height: Vec<i32>) -> i32 {
-    let mut max = 0;
-    let mut left = 0_usize;
-    let mut right = height.len() - 1;
+struct Solution;
 
-    // outside loop for first vals
-    let mut height_left = height[left];
-    let mut height_right = height[right];
-    let mut current_area = (right - left) as i32 * height_left.min(height_right);
-    if max < current_area {
-        max = current_area;
-    }
+impl Solution {
+    pub fn max_area(height: Vec<i32>) -> i32 {
+        let mut max = 0;
+        let mut left = 0_usize;
+        let mut right = height.len() - 1;
 
-    loop {
-        // move shorter one over
-        if height_left < height_right {
-            // move left to the right
-            left += 1;
-        } else {
-            // move right to the left
-            right -= 1;
-        }
-
-        if right <= left {
-            break;
-        }
-
-        height_left = height[left];
-        height_right = height[right];
-        current_area = (right - left) as i32 * height_left.min(height_right);
+        // outside loop for first vals
+        let mut height_left = height[left];
+        let mut height_right = height[right];
+        let mut current_area = (right - left) as i32 * height_left.min(height_right);
         if max < current_area {
             max = current_area;
         }
-    }
-    max
-}
 
+        loop {
+            // move shorter one over
+            if height_left < height_right {
+                // move left to the right
+                left += 1;
+            } else {
+                // move right to the left
+                right -= 1;
+            }
+
+            if right <= left {
+                break;
+            }
+
+            height_left = height[left];
+            height_right = height[right];
+            current_area = (right - left) as i32 * height_left.min(height_right);
+            if max < current_area {
+                max = current_area;
+            }
+        }
+        max
+    }
+}
 #[cfg(test)]
-mod problem_tests {
+mod tests {
     use super::*;
 
     #[test]
     fn test_max_area() {
-        assert_eq!(max_area(vec![1, 8, 6, 2, 5, 4, 8, 3, 7]), 49);
-        assert_eq!(max_area(vec![1, 1]), 1);
+        assert_eq!(Solution::max_area(vec![1, 8, 6, 2, 5, 4, 8, 3, 7]), 49);
+        assert_eq!(Solution::max_area(vec![1, 1]), 1);
     }
 }

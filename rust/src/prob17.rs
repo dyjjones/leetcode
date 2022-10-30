@@ -1,30 +1,34 @@
 use std::collections::HashMap;
 
-pub fn letter_combinations(digits: String) -> Vec<String> {
-    let nums_to_chars_vec = vec![
-        ('2', vec!['a', 'b', 'c']),
-        ('3', vec!['d', 'e', 'f']),
-        ('4', vec!['g', 'h', 'i']),
-        ('5', vec!['j', 'k', 'l']),
-        ('6', vec!['m', 'n', 'o']),
-        ('7', vec!['p', 'q', 'r', 's']),
-        ('8', vec!['t', 'u', 'v']),
-        ('9', vec!['w', 'x', 'y', 'z']),
-    ];
-    let mut nums_to_chars = HashMap::<char, Vec<char>>::new();
-    for (numc, charsv) in nums_to_chars_vec {
-        nums_to_chars.insert(numc, charsv);
+struct Solution;
+
+impl Solution {
+    pub fn letter_combinations(digits: String) -> Vec<String> {
+        let nums_to_chars_vec = vec![
+            ('2', vec!['a', 'b', 'c']),
+            ('3', vec!['d', 'e', 'f']),
+            ('4', vec!['g', 'h', 'i']),
+            ('5', vec!['j', 'k', 'l']),
+            ('6', vec!['m', 'n', 'o']),
+            ('7', vec!['p', 'q', 'r', 's']),
+            ('8', vec!['t', 'u', 'v']),
+            ('9', vec!['w', 'x', 'y', 'z']),
+        ];
+        let mut nums_to_chars = HashMap::<char, Vec<char>>::new();
+        for (numc, charsv) in nums_to_chars_vec {
+            nums_to_chars.insert(numc, charsv);
+        }
+
+        let letter_product = digits
+            .chars()
+            .map(|c| nums_to_chars.get(&c).unwrap())
+            .collect::<Vec<_>>();
+
+        product(&letter_product)
+            .into_iter()
+            .map(|v| v.iter().collect::<String>())
+            .collect::<Vec<_>>()
     }
-
-    let letter_product = digits
-        .chars()
-        .map(|c| nums_to_chars.get(&c).unwrap())
-        .collect::<Vec<_>>();
-
-    product(&letter_product)
-        .into_iter()
-        .map(|v| v.iter().collect::<String>())
-        .collect::<Vec<_>>()
 }
 
 fn product(matrix: &Vec<&Vec<char>>) -> Vec<Vec<char>> {
@@ -53,13 +57,13 @@ fn product(matrix: &Vec<&Vec<char>>) -> Vec<Vec<char>> {
 }
 
 #[cfg(test)]
-mod problem_tests {
+mod tests {
     use super::*;
 
     #[test]
     fn test_letter_combinations1() {
         assert_eq!(
-            letter_combinations(String::from("23")),
+            Solution::letter_combinations(String::from("23")),
             vec!["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
                 .iter()
                 .map(|&s| String::from(s))
@@ -68,12 +72,15 @@ mod problem_tests {
     }
     #[test]
     fn test_letter_combinations2() {
-        assert_eq!(letter_combinations(String::from("")), Vec::<String>::new());
+        assert_eq!(
+            Solution::letter_combinations(String::from("")),
+            Vec::<String>::new()
+        );
     }
     #[test]
     fn test_letter_combinations3() {
         assert_eq!(
-            letter_combinations(String::from("2")),
+            Solution::letter_combinations(String::from("2")),
             vec!["a", "b", "c"]
                 .iter()
                 .map(|&s| String::from(s))
@@ -84,7 +91,7 @@ mod problem_tests {
     #[test]
     fn test_letter_combinations4() {
         assert_eq!(
-            letter_combinations(String::from("5467")),
+            Solution::letter_combinations(String::from("5467")),
             vec![
                 "jgmp", "jgmq", "jgmr", "jgms", "jgnp", "jgnq", "jgnr", "jgns", "jgop", "jgoq",
                 "jgor", "jgos", "jhmp", "jhmq", "jhmr", "jhms", "jhnp", "jhnq", "jhnr", "jhns",

@@ -142,52 +142,55 @@ fn build(values: Vec<i32>) -> Option<Box<ListNode>> {
 //     summation
 // }
 
-pub fn add_two_numbers(
-    l1: Option<Box<ListNode>>,
-    l2: Option<Box<ListNode>>,
-) -> Option<Box<ListNode>> {
-    let mut carry = false;
-    let mut current_l1 = &l1;
-    let mut current_l2 = &l2;
+struct Solution;
 
-    let mut digits = vec![];
-    let mut val1: i32;
-    let mut val2: i32;
-    loop {
-        let mut iter_sum = if carry { 1 } else { 0 }
-            + match (current_l1, current_l2) {
-                (Some(first), Some(second)) => {
-                    current_l1 = &first.next;
-                    current_l2 = &second.next;
-                    val1 = first.val;
-                    val2 = second.val;
+impl Solution {
+    pub fn add_two_numbers(
+        l1: Option<Box<ListNode>>,
+        l2: Option<Box<ListNode>>,
+    ) -> Option<Box<ListNode>> {
+        let mut carry = false;
+        let mut current_l1 = &l1;
+        let mut current_l2 = &l2;
 
-                    val1 + val2
-                }
-                (None, None) => break,
-                (Some(only), None) | (None, Some(only)) => {
-                    current_l1 = &only.next;
-                    current_l2 = &None;
-                    only.val
-                }
-            };
-        if iter_sum < 10 {
-            carry = false;
-        } else {
-            carry = true;
-            iter_sum -= 10;
+        let mut digits = vec![];
+        let mut val1: i32;
+        let mut val2: i32;
+        loop {
+            let mut iter_sum = if carry { 1 } else { 0 }
+                + match (current_l1, current_l2) {
+                    (Some(first), Some(second)) => {
+                        current_l1 = &first.next;
+                        current_l2 = &second.next;
+                        val1 = first.val;
+                        val2 = second.val;
+
+                        val1 + val2
+                    }
+                    (None, None) => break,
+                    (Some(only), None) | (None, Some(only)) => {
+                        current_l1 = &only.next;
+                        current_l2 = &None;
+                        only.val
+                    }
+                };
+            if iter_sum < 10 {
+                carry = false;
+            } else {
+                carry = true;
+                iter_sum -= 10;
+            }
+            digits.push(iter_sum);
         }
-        digits.push(iter_sum);
+        if carry {
+            digits.push(1);
+        }
+        println!("digits: {digits:?}");
+        build(digits)
     }
-    if carry {
-        digits.push(1);
-    }
-    println!("digits: {digits:?}");
-    build(digits)
 }
-
 #[cfg(test)]
-mod problem_tests {
+mod tests {
     use super::*;
 
     #[test]
@@ -195,7 +198,7 @@ mod problem_tests {
         let l1 = build(vec![2, 4, 3]);
         let l2 = build(vec![5, 6, 4]);
         let expected = build(vec![7, 0, 8]);
-        assert_eq!(add_two_numbers(l1, l2), expected);
+        assert_eq!(Solution::add_two_numbers(l1, l2), expected);
     }
 
     #[test]
@@ -203,6 +206,6 @@ mod problem_tests {
         let l1 = build(vec![9, 9, 9, 9, 9, 9, 9]);
         let l2 = build(vec![9, 9, 9, 9]);
         let expected = build(vec![8, 9, 9, 9, 0, 0, 0, 1]);
-        assert_eq!(add_two_numbers(l1, l2), expected);
+        assert_eq!(Solution::add_two_numbers(l1, l2), expected);
     }
 }

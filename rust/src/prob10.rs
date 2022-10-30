@@ -23,61 +23,80 @@
 //     }
 // }
 
-pub fn is_match(s: String, p: String) -> bool {
-    fn rec(text: &[char], pattern: &[char]) -> bool {
-        if pattern.is_empty() {
-            text.is_empty()
-        } else {
-            let first_match = !text.is_empty() && (pattern[0] == '.' || pattern[0] == text[0]);
-            if pattern.len() >= 2 && pattern[1] == '*' {
-                rec(text, &pattern[2..]) || first_match && rec(&text[1..], pattern)
+struct Solution;
+
+impl Solution {
+    pub fn is_match(s: String, p: String) -> bool {
+        fn rec(text: &[char], pattern: &[char]) -> bool {
+            if pattern.is_empty() {
+                text.is_empty()
             } else {
-                first_match && rec(&text[1..], &pattern[1..])
+                let first_match = !text.is_empty() && (pattern[0] == '.' || pattern[0] == text[0]);
+                if pattern.len() >= 2 && pattern[1] == '*' {
+                    rec(text, &pattern[2..]) || first_match && rec(&text[1..], pattern)
+                } else {
+                    first_match && rec(&text[1..], &pattern[1..])
+                }
             }
         }
+        rec(
+            &s.chars().collect::<Vec<_>>(),
+            &p.chars().collect::<Vec<_>>(),
+        )
     }
-    rec(
-        &s.chars().collect::<Vec<_>>(),
-        &p.chars().collect::<Vec<_>>(),
-    )
 }
 
 #[cfg(test)]
-mod problem_tests {
+mod tests {
     use super::*;
 
     #[test]
     fn test_is_match_simple() {
-        assert_eq!(is_match("aa".to_string(), "a".to_string()), false);
-        assert_eq!(is_match("".to_string(), "a*".to_string()), true);
-        assert_eq!(is_match("a".to_string(), "a*".to_string()), true);
-        assert_eq!(is_match("aa".to_string(), "a*".to_string()), true);
-        assert_eq!(is_match("aaa".to_string(), "a*".to_string()), true);
-        assert_eq!(is_match("ab".to_string(), ".*".to_string()), true);
+        assert_eq!(Solution::is_match("aa".to_string(), "a".to_string()), false);
+        assert_eq!(Solution::is_match("".to_string(), "a*".to_string()), true);
+        assert_eq!(Solution::is_match("a".to_string(), "a*".to_string()), true);
+        assert_eq!(Solution::is_match("aa".to_string(), "a*".to_string()), true);
+        assert_eq!(
+            Solution::is_match("aaa".to_string(), "a*".to_string()),
+            true
+        );
+        assert_eq!(Solution::is_match("ab".to_string(), ".*".to_string()), true);
     }
 
     #[test]
     fn test_is_match_complex1() {
-        assert_eq!(is_match("aabccd".to_string(), "a*bc.*".to_string()), true);
+        assert_eq!(
+            Solution::is_match("aabccd".to_string(), "a*bc.*".to_string()),
+            true
+        );
     }
     #[test]
     fn test_is_match_complex2() {
-        assert_eq!(is_match("aabccd".to_string(), "a*bc.*.".to_string()), true);
+        assert_eq!(
+            Solution::is_match("aabccd".to_string(), "a*bc.*.".to_string()),
+            true
+        );
     }
     #[test]
     fn test_is_match_complex3() {
-        assert_eq!(is_match("aabccd".to_string(), "a*bc.*a".to_string()), false);
+        assert_eq!(
+            Solution::is_match("aabccd".to_string(), "a*bc.*a".to_string()),
+            false
+        );
     }
     #[test]
     fn test_is_match_complex4() {
         assert_eq!(
-            is_match("aabccde".to_string(), "a*bc.*.*".to_string()),
+            Solution::is_match("aabccde".to_string(), "a*bc.*.*".to_string()),
             true
         );
     }
     #[test]
     fn test_is_match_complex5() {
-        assert_eq!(is_match("aabccd".to_string(), "a*bx*c.*".to_string()), true);
+        assert_eq!(
+            Solution::is_match("aabccd".to_string(), "a*bx*c.*".to_string()),
+            true
+        );
 
         // assert_eq!(is_match("aabccd", "a*bx*c.*"), true);
         // assert_eq!(what_happens("aabb".to_string()), "bb");
@@ -85,13 +104,16 @@ mod problem_tests {
 
     #[test]
     fn test_is_match_complex6() {
-        assert_eq!(is_match("aaa".to_string(), "ab*a*c*a".to_string()), true);
+        assert_eq!(
+            Solution::is_match("aaa".to_string(), "ab*a*c*a".to_string()),
+            true
+        );
     }
 
     #[test]
     fn test_is_match_complex7() {
         assert_eq!(
-            is_match("aaabcaaa".to_string(), "aa*b.*a*a".to_string()),
+            Solution::is_match("aaabcaaa".to_string(), "aa*b.*a*a".to_string()),
             true
         );
     }
@@ -99,14 +121,14 @@ mod problem_tests {
     #[test]
     fn test_is_match_complex8() {
         assert_eq!(
-            is_match("aaabbacaabbaa".to_string(), "aa*bb*.*a*a.*".to_string()),
+            Solution::is_match("aaabbacaabbaa".to_string(), "aa*bb*.*a*a.*".to_string()),
             true
         );
     }
 
     #[test]
     fn test_complex_10() {
-        assert!(is_match(
+        assert!(Solution::is_match(
             String::from("abcaaaaaaabaabcabac"),
             String::from(".*ab.a.*a*a*.*b*b*")
         ));
