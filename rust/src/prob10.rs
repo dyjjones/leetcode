@@ -52,51 +52,48 @@ mod tests {
 
     #[test]
     fn test_is_match_simple() {
-        assert_eq!(Solution::is_match("aa".to_string(), "a".to_string()), false);
-        assert_eq!(Solution::is_match("".to_string(), "a*".to_string()), true);
-        assert_eq!(Solution::is_match("a".to_string(), "a*".to_string()), true);
-        assert_eq!(Solution::is_match("aa".to_string(), "a*".to_string()), true);
-        assert_eq!(
-            Solution::is_match("aaa".to_string(), "a*".to_string()),
-            true
-        );
-        assert_eq!(Solution::is_match("ab".to_string(), ".*".to_string()), true);
+        assert!(!Solution::is_match("aa".to_string(), "a".to_string()));
+        assert!(Solution::is_match("".to_string(), "a*".to_string()));
+        assert!(Solution::is_match("a".to_string(), "a*".to_string()));
+        assert!(Solution::is_match("aa".to_string(), "a*".to_string()));
+        assert!(Solution::is_match("aaa".to_string(), "a*".to_string()));
+        assert!(Solution::is_match("ab".to_string(), ".*".to_string()));
     }
 
     #[test]
     fn test_is_match_complex1() {
-        assert_eq!(
-            Solution::is_match("aabccd".to_string(), "a*bc.*".to_string()),
-            true
-        );
+        assert!(Solution::is_match(
+            "aabccd".to_string(),
+            "a*bc.*".to_string()
+        ));
     }
     #[test]
     fn test_is_match_complex2() {
-        assert_eq!(
-            Solution::is_match("aabccd".to_string(), "a*bc.*.".to_string()),
-            true
-        );
+        assert!(Solution::is_match(
+            "aabccd".to_string(),
+            "a*bc.*.".to_string()
+        ));
     }
     #[test]
     fn test_is_match_complex3() {
-        assert_eq!(
-            Solution::is_match("aabccd".to_string(), "a*bc.*a".to_string()),
-            false
-        );
+        assert!(!Solution::is_match(
+            "aabccd".to_string(),
+            "a*bc.*a".to_string()
+        ));
     }
     #[test]
     fn test_is_match_complex4() {
-        assert_eq!(
-            Solution::is_match("aabccde".to_string(), "a*bc.*.*".to_string()),
-            true
-        );
+        assert!(Solution::is_match(
+            "aabccde".to_string(),
+            "a*bc.*.*".to_string()
+        ));
     }
     #[test]
     fn test_is_match_complex5() {
-        assert_eq!(
-            Solution::is_match("aabccd".to_string(), "a*bx*c.*".to_string()),
-            true
-        );
+        assert!(Solution::is_match(
+            "aabccd".to_string(),
+            "a*bx*c.*".to_string()
+        ));
 
         // assert_eq!(is_match("aabccd", "a*bx*c.*"), true);
         // assert_eq!(what_happens("aabb".to_string()), "bb");
@@ -104,26 +101,26 @@ mod tests {
 
     #[test]
     fn test_is_match_complex6() {
-        assert_eq!(
-            Solution::is_match("aaa".to_string(), "ab*a*c*a".to_string()),
-            true
-        );
+        assert!(Solution::is_match(
+            "aaa".to_string(),
+            "ab*a*c*a".to_string()
+        ));
     }
 
     #[test]
     fn test_is_match_complex7() {
-        assert_eq!(
-            Solution::is_match("aaabcaaa".to_string(), "aa*b.*a*a".to_string()),
-            true
-        );
+        assert!(Solution::is_match(
+            "aaabcaaa".to_string(),
+            "aa*b.*a*a".to_string()
+        ));
     }
 
     #[test]
     fn test_is_match_complex8() {
-        assert_eq!(
-            Solution::is_match("aaabbacaabbaa".to_string(), "aa*bb*.*a*a.*".to_string()),
-            true
-        );
+        assert!(Solution::is_match(
+            "aaabbacaabbaa".to_string(),
+            "aa*bb*.*a*a.*".to_string()
+        ));
     }
 
     #[test]

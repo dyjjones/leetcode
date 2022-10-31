@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 struct Solution;
 
 impl Solution {
@@ -35,39 +37,35 @@ impl Solution {
         };
         let mut remainder = (0, 0);
         for (&k, v) in &mut iter {
-            if drop < *v {
-                remainder = (*k, v - drop);
-                break;
-            } else if drop == *v {
-                remainder = (*k, 0);
-                // return *k as _;
-                break;
-            } else {
-                drop -= v;
+            match drop.cmp(v) {
+                Ordering::Less => {
+                    remainder = (*k, v - drop);
+                    break;
+                }
+                Ordering::Equal => {
+                    remainder = (*k, 0);
+                    // return *k as _;
+                    break;
+                }
+                Ordering::Greater => {
+                    drop -= v;
+                }
             }
         }
         match (remainder, total % 2 == 0) {
             ((_, 0), true) => {
                 let next1 = iter.next().unwrap();
-                if *next1.1 == 1 as usize {
+                if *next1.1 == 1 {
                     let next2 = iter.next().unwrap();
-                    return (*next1.0 + *next2.0) as f64 / 2.0;
+                    (*next1.0 + *next2.0) as f64 / 2.0
                 } else {
-                    return **next1.0 as _;
+                    **next1.0 as _
                 }
             }
-            ((_, 0), false) => {
-                return **iter.next().unwrap().0 as _;
-            }
-            ((k, 1), true) => {
-                return (k + **iter.next().unwrap().0) as f64 / 2.0;
-            }
-            ((k, 1), false) => {
-                return k as _;
-            }
-            ((k, _), _) => {
-                return k as _;
-            }
+            ((_, 0), false) => **iter.next().unwrap().0 as _,
+            ((k, 1), true) => (k + **iter.next().unwrap().0) as f64 / 2.0,
+            ((k, 1), false) => k as _,
+            ((k, _), _) => k as _,
         }
     }
 }

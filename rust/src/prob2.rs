@@ -40,7 +40,7 @@ fn prepend(l: ListNode, val: i32) -> ListNode {
     }
 }
 fn build(values: Vec<i32>) -> Option<Box<ListNode>> {
-    if values.len() == 0 {
+    if values.is_empty() {
         return None;
     }
     let mut values_iter = values.iter().rev();
@@ -157,7 +157,7 @@ impl Solution {
         let mut val1: i32;
         let mut val2: i32;
         loop {
-            let mut iter_sum = if carry { 1 } else { 0 }
+            let mut iter_sum = (carry as i32)
                 + match (current_l1, current_l2) {
                     (Some(first), Some(second)) => {
                         current_l1 = &first.next;

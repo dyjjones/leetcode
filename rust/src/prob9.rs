@@ -14,7 +14,7 @@ impl Solution {
         let mut rem;
         loop {
             rem = div % 10;
-            div = div / 10;
+            div /= 10;
             nums.push(rem);
 
             if div.abs() < 10 {
@@ -35,12 +35,12 @@ mod tests {
 
     #[test]
     fn test_is_palindrome() {
-        assert_eq!(Solution::is_palindrome(121), true);
-        assert_eq!(Solution::is_palindrome(-123), false);
-        assert_eq!(Solution::is_palindrome(10), false);
-        assert_eq!(Solution::is_palindrome(0), true);
-        assert_eq!(Solution::is_palindrome(1), true);
-        assert_eq!(Solution::is_palindrome(1000000001), true);
-        assert_eq!(Solution::is_palindrome(1567651), true);
+        assert!(Solution::is_palindrome(121));
+        assert!(!Solution::is_palindrome(-123));
+        assert!(!Solution::is_palindrome(10));
+        assert!(Solution::is_palindrome(0));
+        assert!(Solution::is_palindrome(1));
+        assert!(Solution::is_palindrome(1000000001));
+        assert!(Solution::is_palindrome(1567651));
     }
 }

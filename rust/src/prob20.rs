@@ -10,7 +10,7 @@ impl Solution {
         pairs.insert('}', '{');
         pairs.insert(']', '[');
 
-        for c in s.chars().into_iter() {
+        for c in s.chars() {
             match c {
                 '(' | '[' | '{' => {
                     stack.push(c);
@@ -37,18 +37,18 @@ mod tests {
 
     #[test]
     fn test_is_valid1() {
-        assert_eq!(Solution::is_valid("()".to_string()), true);
+        assert!(Solution::is_valid("()".to_string()));
     }
     #[test]
     fn test_is_valid2() {
-        assert_eq!(Solution::is_valid("()[]{}".to_string()), true);
+        assert!(Solution::is_valid("()[]{}".to_string()));
     }
     #[test]
     fn test_is_valid3() {
-        assert_eq!(Solution::is_valid("(]".to_string()), false);
+        assert!(!Solution::is_valid("(]".to_string()));
     }
     #[test]
     fn test_is_valid4() {
-        assert_eq!(Solution::is_valid("()[({{}}())]".to_string()), true);
+        assert!(Solution::is_valid("()[({{}}())]".to_string()));
     }
 }

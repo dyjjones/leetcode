@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 struct Solution;
 
 impl Solution {
@@ -19,42 +21,46 @@ impl Solution {
             second = &nums[b_i];
             third = &nums[c_i];
             let sum = first + second + third;
-            if sum < target {
-                if target - sum < delta {
-                    closest = Some(sum);
-                    delta = target - sum;
-                }
-                // decrement c_i if not next to b_i
-                if b_i + 1 == c_i {
-                    // reset positions or return
-                    if a_i + 1 == b_i {
-                        return closest.unwrap();
-                    } else {
-                        a_i += 1;
-                        b_i = a_i + 1;
-                        c_i = last;
+            match sum.cmp(&target) {
+                Ordering::Less => {
+                    if target - sum < delta {
+                        closest = Some(sum);
+                        delta = target - sum;
                     }
-                } else {
-                    b_i += 1;
-                }
-            } else if sum == target {
-                return target;
-            } else if target < sum {
-                if sum - target < delta {
-                    closest = Some(sum);
-                    delta = sum - target;
-                }
-                if b_i + 1 == c_i {
-                    // reset positions or return
-                    if a_i + 1 == b_i {
-                        return closest.unwrap();
+                    // decrement c_i if not next to b_i
+                    if b_i + 1 == c_i {
+                        // reset positions or return
+                        if a_i + 1 == b_i {
+                            return closest.unwrap();
+                        } else {
+                            a_i += 1;
+                            b_i = a_i + 1;
+                            c_i = last;
+                        }
                     } else {
-                        a_i += 1;
-                        b_i = a_i + 1;
-                        c_i = last;
+                        b_i += 1;
                     }
-                } else {
-                    c_i -= 1;
+                }
+                Ordering::Equal => {
+                    return target;
+                }
+                Ordering::Greater => {
+                    if sum - target < delta {
+                        closest = Some(sum);
+                        delta = sum - target;
+                    }
+                    if b_i + 1 == c_i {
+                        // reset positions or return
+                        if a_i + 1 == b_i {
+                            return closest.unwrap();
+                        } else {
+                            a_i += 1;
+                            b_i = a_i + 1;
+                            c_i = last;
+                        }
+                    } else {
+                        c_i -= 1;
+                    }
                 }
             }
         }

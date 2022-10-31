@@ -27,10 +27,10 @@ impl Solution {
             .take_while(|c| c.is_ascii_digit())
             .collect::<String>();
 
-        if num_str.len() == 0 {
+        if num_str.is_empty() {
             return 0;
         }
-        let number = match num_str.parse::<i32>() {
+        match num_str.parse::<i32>() {
             Ok(n) => match is_negative {
                 true => -n,
                 false => n,
@@ -39,8 +39,7 @@ impl Solution {
                 true => i32::MIN,
                 false => i32::MAX,
             },
-        };
-        number
+        }
     }
 }
 #[cfg(test)]

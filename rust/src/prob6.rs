@@ -10,14 +10,13 @@ impl Solution {
         for _ in 0..num_rows {
             matrix.push(vec![]);
         }
-        let rows_loopback;
-        if s.len() == 2 {
-            rows_loopback = (0..=1).collect();
+        let rows_loopback = if s.len() == 2 {
+            (0..=1).collect()
         } else {
-            rows_loopback = (0..num_rows)
+            (0..num_rows)
                 .chain((1..(num_rows - 1)).rev())
-                .collect::<Vec<i32>>();
-        }
+                .collect::<Vec<i32>>()
+        };
         let rows_cycle = rows_loopback.iter().cycle();
 
         for (row, c) in rows_cycle.zip(s.chars().into_iter()) {

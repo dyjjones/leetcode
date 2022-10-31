@@ -7,7 +7,7 @@ impl Solution {
         let mut rem;
         loop {
             rem = div % 10;
-            div = div / 10;
+            div /= 10;
             nums.push(rem);
 
             if div.abs() < 10 {

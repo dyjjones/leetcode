@@ -19,17 +19,14 @@ impl Solution {
 
         for (c, size, optional_adder) in roman_numerals {
             div = rem / size;
-            rem = rem % size;
+            rem %= size;
             // let _ @ (div, rem) = (rem / 1000, rem % 1000);
             builder.push_str(&(std::iter::repeat(c).take(div as _).collect::<String>()) as _);
-            match optional_adder {
-                Some((s, subtractor)) => {
-                    if subtractor <= rem {
-                        builder.push_str(s);
-                        rem -= subtractor;
-                    }
+            if let Some((s, subtractor)) = optional_adder {
+                if subtractor <= rem {
+                    builder.push_str(s);
+                    rem -= subtractor;
                 }
-                None => {}
             }
         }
 

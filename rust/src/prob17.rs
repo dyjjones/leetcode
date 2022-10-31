@@ -31,7 +31,7 @@ impl Solution {
     }
 }
 
-fn product(matrix: &Vec<&Vec<char>>) -> Vec<Vec<char>> {
+fn product(matrix: &[&Vec<char>]) -> Vec<Vec<char>> {
     let mut res = vec![];
 
     let mut matrix_iter = matrix.iter();
