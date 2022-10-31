@@ -21,6 +21,7 @@ mod prob17;
 
 mod prob20;
 mod prob217;
+mod prob268;
 
 fn main() {
     println!("Run `cargo test` for checking solutions.");
